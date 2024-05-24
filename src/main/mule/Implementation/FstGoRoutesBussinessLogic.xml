@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:db="http://www.mulesoft.org/schema/mule/db" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd">
+	<flow name="FstGoRoutesBussinessLogicFlow" doc:id="dc39ebc1-5a8d-4145-bbc9-bdc7a905744d" >
+		<set-payload value='#[{&#10;    "transactionId": "hgghghh-shfgsjk-ROUTES",&#10;    "destinationLocation": "BEN-SG",&#10;    "originLocation": "KLG-MY"&#10;}]' doc:name="Set Payload" doc:id="24ce9f2c-a94f-45f2-9cc5-9e6b46764a56" />
+	</flow>
+</mule>

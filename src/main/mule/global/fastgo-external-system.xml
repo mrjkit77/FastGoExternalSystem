@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="fastgo-external-systemFlow" doc:id="0b87b1cf-d93d-418d-82da-7867f0fec35a" >
+		<http:listener doc:name="Listener" doc:id="26c3f1b2-6ede-49a0-9c45-3d11dec8b473" config-ref="HTTP_Listener_config" path="${http.listner.path}"/>
+		<ee:transform doc:name="Transform Messageqq" doc:id="8f0aad39-8ff2-41a1-806c-724675fa85ee">
+			<ee:message />
+			<ee:variables>
+				<ee:set-variable variableName="serviceType"><![CDATA[%dw 2.0
+output application/java
+---
+attributes.uriParams.serviceType]]></ee:set-variable>
+				<ee:set-variable variableName="transactionId"><![CDATA[%dw 2.0
+output application/java
+---
+attributes.headers.transactionId]]></ee:set-variable>
+				<ee:set-variable variableName="URL"><![CDATA[%dw 2.0
+output application/java
+---
+attributes.headers.requestUri]]></ee:set-variable>
+			</ee:variables>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="b2e6a13f-8faf-4dba-838e-6c129cf2e8ab" message="#[payload]"/>
+		<choice doc:name="Choice" doc:id="e6641141-403a-412c-90ad-958af3da774c" >
+			<when expression='#[vars.serviceType == "routes"]'>
+				<logger level="INFO" doc:name="Logger11" doc:id="2ec1f237-0001-4dd6-ad1f-6b787966c008" message="FastGoRoutesResponsesend"/>
+				<flow-ref doc:name="Flow Reference" doc:id="8ae0684a-9840-4953-9195-3989f47fe6bb" name="FstGoRoutesBussinessLogicFlow" />
+			</when>
+			<when expression='#[vars.serviceType == "schedule"]'>
+				<logger level="INFO" doc:name="Logger111" doc:id="6826fbf5-4239-4c0d-8655-b2103a6f24e9" message='"FastGoScheduleResponsesend"'/>
+				<flow-ref doc:name="Flow Reference" doc:id="bb2772e7-698a-4fa0-b878-6b98fdc11edb" name="FastGoBussinessLogic_ScheduleFlow"/>
+			</when>
+			<otherwise >
+				<logger level="INFO" doc:name="Logger" doc:id="551a00f9-4e7f-48b3-b841-3beb4b65dc17" message='#["Invalid ServiceType"]'/>
+			</otherwise>
+		</choice>
+		<ee:transform doc:name="Transform Message" doc:id="00dd5d5f-9283-478d-b14e-ca22d5eefc2c" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"Id": payload.transactionId,
+	"dLocation": payload.destinationLocation
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger222" doc:id="8202a6c9-a5ba-450f-8037-fca18581303a" message='#["Response Send from FastGo External System"]'/>
+	</flow>
+</mule>
