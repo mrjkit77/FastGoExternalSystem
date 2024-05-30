@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_dc39ebc1_5a8d_4145_bbc9_bdc7a905744d_Input_Variables_URI = String | Null
+

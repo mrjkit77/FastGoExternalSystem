@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="FastGoBussinessLogic_ScheduleFlow" doc:id="84d9a705-23c7-4a8a-87ad-071368fab702" >
+		<set-payload value='#[{&#10;    "transactionId": "hgghghh-shfgsjk-schedule",&#10;    "destinationLocation": "KLG-MY",&#10;    "originLocation": "BEN-SG"&#10;}]' doc:name="Set Payload" doc:id="811a61e6-e6a5-42d7-bbed-d4f24c816878" />
+	</flow>
+</mule>
